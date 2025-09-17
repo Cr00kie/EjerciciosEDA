@@ -8,7 +8,8 @@
 #include <vector>
 
 
-// función que resuelve el problema
+// Forma previa
+/*
 void EliminaImpares(std::vector<long long int>& datos) {
     int nValoresBorrados = 0;
     int nUltimaPos = datos.size()-1;
@@ -32,6 +33,34 @@ void EliminaImpares(std::vector<long long int>& datos) {
         }
     }
     datos.resize(nUltimaPos - nValoresBorrados + 1);
+}*/
+
+// La verdad que ni idea de la complejidad, nlog(n)? n?
+void EliminaImpares(std::vector<long long int>& datos) {
+    int nDatosSize = datos.size();
+    int i = 0;
+    // Recorremos el vector
+    for(; i < nDatosSize; i++){
+        // Si un elemento es impar
+        if(datos[i] % 2 != 0){
+            // Buscamos desde ese elemento hasta el final si hay un par
+            //      por el que poder sustituirlo
+            int j = i+1;
+            while(j < nDatosSize && datos[j] % 2 != 0) j++;
+
+            // Si encontramos un par los intercambiamos
+            if(j < nDatosSize){
+                int temp = datos[i];
+                datos[i] = datos[j];
+                datos[j] = temp;
+            }
+            // Si no hay mas pares a la izquierda, podemos terminar
+            else
+                break; 
+        }
+    }
+    
+    datos.resize(i);
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -46,7 +75,6 @@ void resuelveCaso() {
     EliminaImpares(datos);
 
     // escribir sol
-    // std::cout << "Vector resultante : ";
     for(long long int e : datos) std::cout << e << " ";
     std::cout << std::endl;
 }
