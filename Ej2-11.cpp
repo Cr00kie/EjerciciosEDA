@@ -1,4 +1,4 @@
-// ADRIAN ISASI MARTINEZ
+// Adrian Isasi Martinez
 // EDA-GDV33
 
 #include <iostream>
@@ -7,19 +7,25 @@
 #include <vector>
 using namespace std;
 
+void debug(const std::vector<char>& datos, int ini, int fin){
+    for(int i = ini; i < fin; i++){
+        std::cout << datos[i] << " ";
+    }
+    std::cout << std::endl;
+}
+
 // función que resuelve el problema
-int resolver(const std::vector<int>& datos, int ini, int fin) {
+char resolver(const vector<char>& sec, int primer, int ini, int fin) {
     int m = (ini+fin)/2;
+    
+    if(sec[0] != primer) return primer;
 
-    if(datos[m+1] == datos[m]){
-        
-    }
-    else if(datos[m-1] == datos[m]){
+    if(ini == fin-1) return primer + ini + 1;
+    
 
-    }
-    else return m;
-
-
+    if(sec[m] - primer == m)
+        return resolver(sec, primer, m, fin);
+    else return resolver(sec, primer, ini, m);
 }
 
 
@@ -27,15 +33,13 @@ int resolver(const std::vector<int>& datos, int ini, int fin) {
 // configuración, y escribiendo la respuesta
 void resuelveCaso() {
     // leer los datos de la entrada
-    int n;
-    cin >> n;
-    vector<int> v(n);
-    for (int& e : v) cin >> e;
-    
-    // Llamada a la función resolver y mostrar el resultado
-    std::cout << resolver() << "\n";
+    char prim, ult, n;
+    cin >> prim >> ult;
+    n = ult-prim;
+    vector<char> sec(n);
+    for (char& e : sec) cin >> e;
+    cout << resolver(sec, prim, 0, n) << endl;
 }
-
 
 //#define DOMJUDGE
 int main() {
