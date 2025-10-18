@@ -1,11 +1,3 @@
-// Adrian Isasi Martinez
-// EDA-GDV33
-
-
-#include <iostream>
-#include <iomanip>
-#include <fstream>
-
 //  Implementación del TAD Set con array dinámico ordenado y sin repeticiones
 
 #ifndef SET_H
@@ -32,6 +24,21 @@ protected:
 
 public:
 
+    // O(1)
+    T getMax(){
+        return array[nelems-1];
+    }
+
+    //O(1)
+    void removeMax(){
+        --nelems;
+    }
+
+    // O(1)
+    T getMin(){
+        return array[0];
+    }
+
     // constructor: conjunto vacío
     Set() : nelems(0), capacidad(TAM_INICIAL), array(new T[capacidad]) {}
 
@@ -55,89 +62,6 @@ public:
             copia(other);
         }
         return *this;
-    }
-    
-
-    Set<T> operator-(const Set<T>& other) const{
-        Set<T> res(nelems+1);
-
-        int i = 0, j = 0;
-
-        for(; i < nelems && j < other.nelems; ){
-            if(array[i] < other.array[j]){
-                res.array[res.nelems++] = array[i];
-                ++i;
-            } else if (array[i] > other.array[j]){
-                ++j;
-            }
-            else{
-                ++i; ++j;
-            }
-        }
-
-        for(; i < nelems; ++i)
-            res.array[res.nelems++] = array[i];
-
-        return res;
-    }
-
-    // Complejidad: n = this.nelems, m = other.nelems
-    // Viendo las complejidades de cada parte de la funcion
-    //      siempre seria O(n+m) pues deben estar todos los elementos de ambos.
-    //      Pero, nos ahorramos insertar dos veces el mismo elemento.
-    //      No es 2(m+n) porque si ya se ha recorrido en el de arriba los bucles de abajo se saltan.
-    Set<T> operator|| (const Set<T>& other) const{
-        Set<T> res(nelems+other.nelems+1);
-
-        int i = 0, j = 0;
-
-        // O(m + n)
-        for(; i < nelems && j < other.nelems; ){
-            if(array[i] < other.array[j]){
-                res.array[res.nelems++] = array[i];
-                ++i;
-            } else if (array[i] > other.array[j]){
-                res.array[res.nelems++] = other.array[j];
-                ++j;
-            }
-            else{
-                ++i;
-            }
-        }
-
-        // O(n)
-        for(; i < nelems; ++i)
-            res.array[res.nelems++] = array[i];
-
-        // O(m)
-        for(; j < other.nelems; ++j)
-            res.array[res.nelems++] = other.array[j];
-
-        return res;
-    }
-
-    // Complejidad: n = this.nelems, m = other.nelems
-    // nos queda complejidad O(min(n,m)) en el peor caso (Todos los elementos osn iguales)
-    // Pues tendremos que movernos por todos los elementos del mas pequeño de los dos.
-     Set<T> operator&& (const Set<T>& other) const{
-        Set<T> res(nelems+1);
-
-        int i = 0, j = 0;
-
-        // O(n + m)
-        for(; i < nelems && j < other.nelems; ){
-            if(array[i] < other.array[j]){
-                ++i;
-            } else if (array[i] > other.array[j]){
-                ++j;
-            }
-            else{
-                res.array[res.nelems++] = array[i];
-                ++i; ++j;
-            }
-        }
-
-        return res;
     }
 
     // Añadir un elemento. O(n), n=nelems
@@ -302,57 +226,3 @@ ostream& operator<<(ostream& out, Set<T> const& set) {
 
 
 #endif //SET_H
-
-
-// Resuelve un caso de prueba, leyendo de la entrada la
-// configuración, y escribiendo la respuesta
-bool resuelveCaso() {
-    // leer los datos de la entrada
-    int nDatos1, nDatos2;
-    std::cin >> nDatos1;
-    Set<int> set1, set2;
-
-    if (! std::cin)
-        return false;
-
-    for(int i = 0; i < nDatos1; ++i){
-        int dato;
-        std::cin >> dato;
-        set1.add(dato);
-    }
-
-    std::cin >> nDatos2;
-
-    for(int i = 0; i < nDatos2; ++i){
-        int dato;
-        std::cin >> dato;
-        set2.add(dato);
-    }
-    
-    std::cout << (set1 || set2) << '\n' << (set1 && set2) << '\n';
-    
-    return true;
-    
-}
-
-int main() {
-    // Para la entrada por fichero.
-    // Comentar para acepta el reto
-    #ifndef DOMJUDGE
-     std::ifstream in("datos.txt");
-     auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
-     #endif 
-    
-    
-    while (resuelveCaso())
-        ;
-
-    
-    // Para restablecer entrada. Comentar para acepta el reto
-     #ifndef DOMJUDGE // para dejar todo como estaba al principio
-     std::cin.rdbuf(cinbuf);
-     system("PAUSE");
-     #endif
-    
-    return 0;
-}
