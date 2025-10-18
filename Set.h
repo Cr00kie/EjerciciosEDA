@@ -140,6 +140,26 @@ public:
             return false;
     }
 
+    bool operator<=(Set<T>& other) {
+        // Nos quitamos casos obvios
+        if(other.nelems < nelems) return false;
+        
+        int i = 0, k = 0;
+
+        while (i < nelems && k < other.nelems){
+            if(array[i] < other.array[k])
+                return false;
+            else if(array[i] > other.array[k])
+                ++k;
+            else{
+                ++i; ++k;
+            }
+        }
+
+        // Todos los elementos del set estaban en el otro
+        return i >= nelems;
+    }
+
     template <class E>
     friend ostream& operator<<(ostream& out, const Set<E>& s);
 
