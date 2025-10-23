@@ -29,10 +29,10 @@ class Polinomio{
         }
 
         auto it = std::lower_bound(monomios.begin(), monomios.end(), exp, comparaMonomios);
-        if((*it).second == exp){
+        if(it != monomios.end() && (*it).second == exp){
             (*it).first += coef;
             if((*it).first == 0){
-                monomios.erase(it);
+                 monomios.erase(it);
             }
         }
         else{
