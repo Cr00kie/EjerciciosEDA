@@ -133,24 +133,6 @@ public:
       prim = ult;
       ult = aux;
    }
-
-   void duplicaFrecuencias(const std::vector<T>& frec){
-      Nodo * actual = prim;
-
-      for(int i = 0; i < frec.size(); ++i){
-         for(int n = 0; n < frec[i]; ++n){
-            if(n > 0){
-               Nodo* dup = new Nodo(actual->elem, actual->sig);
-               actual->sig = dup;
-               actual = dup->sig;
-               ++nelems;
-            }
-            else{
-               
-            }
-         }
-      }
-   }
    
 protected:
    

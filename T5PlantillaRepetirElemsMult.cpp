@@ -1,5 +1,10 @@
-// Adrian Isasi Martinez
-// EDA-GDV33
+/*
+Nombre completo:
+DNI:
+Usuario del juez:
+Puesto de laboratorio:
+Qué has conseguido hacer y qué no: 
+*/
 
 #include <iostream>
 #include <iomanip>
@@ -14,50 +19,7 @@ class queue_plus : public queue<T> {
 
 public:
     void replicaElems(vector<int> const& mult) {
-        //std::cout << "\nStarting process:\n";
-        Nodo * actual = this->prim;
-        Nodo * anterior = nullptr;
-
-        for(int i = 0; i < mult.size(); ++i){
-            //std::cout << "Curr frec: " << mult[i] << '\n';
-            //std::cout << "Curr elem: " << actual->elem << '\n';
-            // Borra el elemento
-            if(mult[i] == 0){
-                //std::cout << "Erasing elem\n";
-                if(this->prim == actual){
-                    this->pop();
-                    actual = this->prim;
-                }
-                else{
-                    anterior->sig = actual->sig;
-                    if(actual == this->ult) this->ult = anterior;
-                    delete actual;
-                    actual = anterior->sig;
-                    --this->nelems;
-                }
-            }
-            // Duplica el elemento n veces
-            else if(mult[i] > 1){
-                //std::cout << "Duplicating elem times: " << mult[i] << '\n';
-                for(int n = 0; n < mult[i]-1; ++n){
-                    Nodo* dup = new Nodo(actual->elem, actual->sig);
-                    actual->sig = dup;
-                    anterior = actual;
-                    if(actual == this->ult) this->ult = dup;
-                    actual = dup;
-                    ++this->nelems;
-                }
-                anterior = actual;
-                actual = anterior->sig;
-            }
-            else{
-                //std::cout << "Advancing without action\n";
-                anterior = actual;
-                actual = actual->sig;
-            }
-            //std::cout << "---\n";
-        }
-        //std::cout << "RESULT: ";
+        ...
     }
 };
 
@@ -66,12 +28,12 @@ public:
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
     int n;
-    
     queue_plus<int> q;
+
     cin >> n;    
     vector<int> mult(n);
     vector<int> aux(n); // Para darle la vuelta a la secuencia de entrada
-   
+    
     // Leemos la secuencia invertida para q y le damos la vuelta
     for (int i = n-1; i >= 0; --i) cin >> aux[i];
     for (int e : aux) q.push(e);
@@ -108,7 +70,7 @@ int main() {
     // Para la entrada por fichero.
     // Comentar para acepta el reto
 #ifndef DOMJUDGE
-    std::ifstream in("datos.txt");
+    std::ifstream in("input1.txt");
     auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
 #endif
 
