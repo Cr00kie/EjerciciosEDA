@@ -130,6 +130,28 @@ public:
       this->borra_elem(it.act);
       return next;
    }
+
+   void borraElementos(int e){
+      Nodo* actual = this->fantasma->sig;
+      Nodo* anterior = this->fantasma;
+
+      while(actual!=this->fantasma){
+         if(actual->elem == e){
+            anterior->sig = actual->sig;
+            this->borra_elem(actual);
+            actual = anterior->sig;
+         }
+         else {
+            anterior = actual;
+            actual = actual->sig;
+         }
+      }
+
+      // for(auto it = begin(); it != end(); ++it){
+      //   if(*it == e)
+      //       erase(it);
+      // }
+   }
 };
 
 #endif // list_eda_h

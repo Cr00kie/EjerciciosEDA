@@ -103,6 +103,35 @@ public:
    int size() const {
       return nelems;
    }
+
+   void duplica(){
+      Nodo * actual = prim;
+
+      while(actual){
+         Nodo* dup = new Nodo(actual->elem, actual->sig);
+         actual->sig = dup;
+         actual = dup->sig;
+         ++nelems;
+      }
+   }
+
+   void invertir(){
+      Nodo * actual = prim;
+      
+      Nodo * anterior = nullptr;
+
+      while(actual){
+         Nodo * siguiente = actual->sig;
+         actual->sig = anterior;
+
+         anterior = actual;
+         actual = siguiente;
+      }
+
+      Nodo * aux = prim;
+      prim = ult;
+      ult = aux;
+   }
    
 protected:
    
