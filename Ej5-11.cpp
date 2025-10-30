@@ -7,21 +7,27 @@
 #include "list_eda.h"
 using namespace std;
 
-
+// Complejidad: O(n) siendo n = l.size()
 void adelantar(list<char>& l, int pos, int length, int newPos) {
+
+    if(pos <= 0 || pos >= l.size()  || // Posicion de origen incorrecta
+           newPos < 0 || newPos >= l.size() ||
+           length ==  0 || newPos == pos) return;
+
     // Buscamos la posicion deseada 
     list<char>::iterator nuevaPosicion =  l.begin();
     int i = 0;
-    for(int i; i < newPos; ++i)
+    for(i; i < newPos; ++i)
         ++nuevaPosicion;
     
     // Buscamos comienzo del segmento
     list<char>::iterator comienzoSegmento = nuevaPosicion;
-    for(; i < pos; ++i) ++nuevaPosicion;
+    for(; i < pos; ++i) ++comienzoSegmento;
+
 
     // Vamos borrando y reinsertando los elementos del segmento
     for(int j = 0; j < length && comienzoSegmento != l.end(); ++j){
-        nuevaPosicion = l.insert(nuevaPosicion, *comienzoSegmento);
+        nuevaPosicion = ++(l.insert(nuevaPosicion, *comienzoSegmento));
         comienzoSegmento = l.erase(comienzoSegmento);
     }
 }
