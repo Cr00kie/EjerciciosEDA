@@ -13,7 +13,7 @@ class list_plus : public list<T> {
     using Nodo = typename list<T>::Nodo;
 
 public:
-    // Complejidad: O(n) siendo n = list.size()
+    // Complejidad: O(pos+length) porque siempre tenemos que ir hasta el final del segmento
     void adelantar(int pos, int length, int newPos) {
         Nodo* prevNewPos;
         Nodo* prevComienzoSegmento;
