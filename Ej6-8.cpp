@@ -8,7 +8,20 @@
 #include "bintree_eda.h"
 
 // función que resuelve el problema
-int resolver(bintree<char> & tree) {
+int resolver(bintree<char> const& tree, int& outDiam) {
+    if(tree.empty()) return 0;
+
+    int alturaIzq = resolver(tree.left(), outDiam);
+    int alturaDer = resolver(tree.right(), outDiam);
+
+    int diametro = alturaIzq + alturaDer + 1;
+    if(diametro == 0) diametro = 1; // Si es hoja lo ponemos bien
+
+    if(diametro > outDiam) {
+        outDiam = diametro;
+    }
+
+    return alturaDer > alturaIzq ? alturaDer+1 : alturaIzq+1;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -17,8 +30,9 @@ void resuelveCaso() {
     // leer los datos de la entrada
     
     bintree<char> tree = leerArbol('.');
-    resolver(tree);
-    std::cout <<  << '\n';
+    int sol = 0;
+    resolver(tree, sol);
+    std::cout << sol << '\n';
 
 }
 
