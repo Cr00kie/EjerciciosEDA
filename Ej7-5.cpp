@@ -29,7 +29,7 @@ bool comparaEquipos(ResultadoEquipo& e1, ResultadoEquipo& e2){
 }
 
 void procesaEnvios(vector<ResultadoEquipo>& resultados){
-    unordered_map<NombreEquipo, unordered_map<NombreProblema, Minutos>> resultadoPorEquipo;
+    unordered_map<NombreEquipo, unordered_map<NombreProblema, pair<Minutos, bool>>> resultadoPorEquipo;
 
     string equipo, problema, veredicto;
     int minuto;
@@ -38,19 +38,20 @@ void procesaEnvios(vector<ResultadoEquipo>& resultados){
     while (equipo != "FIN") {
         cin >> problema >> minuto >> veredicto;
 
-        int& resultadoProblema = resultadoPorEquipo[equipo][problema];
+        auto& resultadoProblema = resultadoPorEquipo[equipo][problema];
 
         // Si el equipo no ha resuelto el problema todavia
-        if(resultadoProblema <= 0)
+        if(!resultadoProblema.second)
         {
             // Si el veredicto es CORRECTO
             if(veredicto == "AC"){
-                resultadoProblema = minuto - resultadoProblema;
-                //                       tiempo de entrega-^    penalización acumulada-^
+                resultadoProblema.first = minuto   -   resultadoProblema.first;
+                resultadoProblema.second = true;
+                // tiempo de entrega-^ penalización acumulada-^
             }
             else{
                 // Guardamos la penalizacion en negativo para saber si el problema ha sido resuelto o no
-                resultadoProblema -= 20;
+                resultadoProblema.first -= 20;
             }
         }
         
@@ -62,9 +63,9 @@ void procesaEnvios(vector<ResultadoEquipo>& resultados){
     for(auto it = resultadoPorEquipo.begin(); it != resultadoPorEquipo.end(); ++it){
         resultados[i].nombre = it->first;
         for(auto problema = it->second.begin(); problema != it->second.end(); ++problema){
-            if(problema->second > 0){
+            if(problema->second.second){
                 resultados[i].nProblemasResueltos++;
-                resultados[i].minutos += problema->second;
+                resultados[i].minutos += problema->second.first;
             }
         }
         ++i;
