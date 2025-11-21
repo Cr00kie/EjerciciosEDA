@@ -1,20 +1,14 @@
-HOCKEY
-peter92
-benzu
-j97lee
-RUGBY
-filipo78
-peter92
-PETANCA
-BUCEO
-besugo42
-besugo42
-_FIN_
-TENIS
-raqueta92
-pelota86
-PINGPONG
-raqueta92
-FRONTON
-raqueta92
-_FIN_
+2
+LosIntrepidos PequalsNP 8 TLE
+EquipoA ElSolitario 30 AC
+JavaForever ElSolitario 30 RTE
+LosIntrepidos PequalsNP 100 AC
+LosIntrepidos Sumar2y2 101 AC
+Lentorros Sumar2y2 200 AC
+LosIntrepidos ElSolitario 210 WA
+B_team Horarios 220 WA
+FIN
+NoDoyNiUna A 10 TLE
+NoDoyNiUna B 12 RTE
+NoDoyNiUna C 16 WA
+FIN
