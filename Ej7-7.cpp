@@ -15,10 +15,13 @@ using DNI = string;
 class carnet_puntos {
 private:
     unordered_map<DNI, int> puntosPorConductor;
-    unordered_map<int, int> numConductorConPuntos;
+    int numConductoresConPuntos[16];
 
 public:
-    carnet_puntos() {} 
+    carnet_puntos() {
+        for(int i = 0; i < 16; ++i)
+            numConductoresConPuntos[i] = 0;
+    } 
 
     // Complejidad:
     void nuevo(DNI const& conductor) {
@@ -28,7 +31,7 @@ public:
             throw std::domain_error("Conductor duplicado");
 
         puntosPorConductor[conductor] = 15;
-        numConductorConPuntos[15]++;
+        numConductoresConPuntos[15]++;
     }
 
     // Complejidad:
@@ -37,10 +40,10 @@ public:
         if(cond == puntosPorConductor.end())
             throw std::domain_error("Conductor inexistente");
         
-        numConductorConPuntos[cond->second]--;
+        numConductoresConPuntos[cond->second]--;
         cond->second -= puntos;
         if(cond->second < 0) cond->second = 0;
-        numConductorConPuntos[cond->second]++;
+        numConductoresConPuntos[cond->second]++;
     }
 
     // Complejidad:
@@ -57,9 +60,7 @@ public:
         if(puntos < 0 || puntos > 15)
             throw std::domain_error("Puntos no validos");
         
-        auto res = numConductorConPuntos.find(puntos);
-        
-        return res == numConductorConPuntos.end() ? 0 : res->second;
+        return numConductoresConPuntos[puntos];
     }
 };
 
