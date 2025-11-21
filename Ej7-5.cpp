@@ -12,9 +12,15 @@ using namespace std;
 using NombreEquipo = string;
 using NombreProblema = string;
 using Minutos = int;
+using InfoProblema = unordered_map<NombreProblema, int>;
 
 struct ResultadoEquipo{
     NombreEquipo nombre;
+    int nProblemasResueltos;
+    Minutos minutos;
+};
+
+struct InfoEquipo{
     int nProblemasResueltos;
     Minutos minutos;
 };
@@ -28,51 +34,56 @@ bool comparaEquipos(ResultadoEquipo& e1, ResultadoEquipo& e2){
     else return false;
 }
 
+// Complejidad:
+// O(n + e + elog(e)) con -> n = numero de entregas totales realizadas por los participantes
+//                          -> e = numero de equipos que participan en el concurso
 void procesaEnvios(vector<ResultadoEquipo>& resultados){
-    unordered_map<NombreEquipo, unordered_map<NombreProblema, pair<Minutos, bool>>> resultadoPorEquipo;
+    unordered_map<NombreEquipo, InfoProblema> infoProblemasCadaEquipo;
+    unordered_map<NombreEquipo, InfoEquipo> infoEquipos; 
 
     string equipo, problema, veredicto;
     int minuto;
     
     cin >> equipo;
+    // O(n) siendo n el numero de entregas realizadas por los participantes
     while (equipo != "FIN") {
         cin >> problema >> minuto >> veredicto;
 
-        auto& resultadoProblema = resultadoPorEquipo[equipo][problema];
+        auto& infoIntentosProblema = infoProblemasCadaEquipo[equipo][problema];
+        auto& infoEquipo = infoEquipos[equipo];
 
         // Si el equipo no ha resuelto el problema todavia
-        if(!resultadoProblema.second)
+        if (infoIntentosProblema != -1)
         {
             // Si el veredicto es CORRECTO
             if(veredicto == "AC"){
-                resultadoProblema.first = minuto   -   resultadoProblema.first;
-                resultadoProblema.second = true;
+                infoEquipo.minutos += minuto + infoIntentosProblema*20;
                 // tiempo de entrega-^ penalización acumulada-^
+                infoEquipo.nProblemasResueltos++;
+                infoIntentosProblema = -1;
             }
             else{
                 // Guardamos la penalizacion en negativo para saber si el problema ha sido resuelto o no
-                resultadoProblema.first -= 20;
+                infoIntentosProblema++;
             }
         }
         
         cin >> equipo;
     }
 
-    resultados.resize(resultadoPorEquipo.size());
+    resultados.resize(infoEquipos.size());
     int i = 0;
-    for(auto it = resultadoPorEquipo.begin(); it != resultadoPorEquipo.end(); ++it){
+    //O(e) siendo 'e' el numero de equipos
+    for(auto it = infoEquipos.begin(); it != infoEquipos.end(); ++it)
+    {
         resultados[i].nombre = it->first;
-        for(auto problema = it->second.begin(); problema != it->second.end(); ++problema){
-            if(problema->second.second){
-                resultados[i].nProblemasResueltos++;
-                resultados[i].minutos += problema->second.first;
-            }
-        }
+        resultados[i].minutos = it->second.minutos;
+        resultados[i].nProblemasResueltos = it->second.nProblemasResueltos;
         ++i;
     }
 
+    // O(eloge) siendo 'e' el numero de equipos que participan en el concurso
     sort(resultados.begin(), resultados.end(), comparaEquipos);
-    
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la

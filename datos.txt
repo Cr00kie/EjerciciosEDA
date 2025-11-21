@@ -1,19 +1,14 @@
-nuevo 123A
-nuevo 456B
-nuevo 666
-cuantos_con_puntos 15
-cuantos_con_puntos 0
-quitar 666 15
-cuantos_con_puntos 0
-quitar 456B 9
-consultar 456B
-quitar 123A 10
-cuantos_con_puntos 5
-quitar 456B 1
-cuantos_con_puntos 5
+2
+LosIntrepidos PequalsNP 8 TLE
+EquipoA ElSolitario 30 AC
+JavaForever ElSolitario 30 RTE
+LosIntrepidos PequalsNP 100 AC
+LosIntrepidos Sumar2y2 101 AC
+Lentorros Sumar2y2 200 AC
+LosIntrepidos ElSolitario 210 WA
+B_team Horarios 220 WA
 FIN
-nuevo 123A
-nuevo 123A
-cuantos_con_puntos 20
-quitar 456B 2
+NoDoyNiUna A 10 TLE
+NoDoyNiUna B 12 RTE
+NoDoyNiUna C 16 WA
 FIN
