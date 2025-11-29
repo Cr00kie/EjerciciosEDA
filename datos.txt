@@ -1,14 +1,46 @@
-2
-LosIntrepidos PequalsNP 8 TLE
-EquipoA ElSolitario 30 AC
-JavaForever ElSolitario 30 RTE
-LosIntrepidos PequalsNP 100 AC
-LosIntrepidos Sumar2y2 101 AC
-Lentorros Sumar2y2 200 AC
-LosIntrepidos ElSolitario 210 WA
-B_team Horarios 220 WA
-FIN
-NoDoyNiUna A 10 TLE
-NoDoyNiUna B 12 RTE
-NoDoyNiUna C 16 WA
-FIN
+12
+nuevoMedico Hernandez
+nuevoMedico Alvarez
+pideConsulta Ana Alvarez 16 12:30
+pideConsulta Antonio Alvarez 16 11:45
+pideConsulta Alvaro Alvarez 17 10:00
+pideConsulta Alba Alvarez 17 10:15
+pideConsulta Anacleto Alvarez 17 10:55
+listaPacientes Alvarez 16
+siguientePaciente Alvarez
+atiendeConsulta Alvarez
+listaPacientes Alvarez 16
+listaPacientes Alvarez 17
+6
+nuevoMedico Hernandez
+pideConsulta Alvarez Ana 16 12:30
+pideConsulta Helena Hernandez 17 10:00
+atiendeConsulta Hernandez
+listaPacientes Hernandez 17
+atiendeConsulta Hernandez
+25 
+nuevoMedico Alvarez 
+pideConsulta Ana Alvarez 16 12:30 
+pideConsulta Antonio Alvarez 16 12:10 
+nuevoMedico Alvarez 
+listaPacientes Alvarez 16 
+nuevoMedico Rodriguez 
+pideConsulta Raul Rodriguez 16 12:30 
+listaPacientes Rodriguez 16 
+pideConsulta Raul Rodriguez 16 14:00 
+pideConsulta Raul Rodriguez 17 12:00 
+listaPacientes Rodriguez 16 
+atiendeConsulta Rodriguez 
+listaPacientes Rodriguez 16 
+atiendeConsulta Rodriguez 
+listaPacientes Rodriguez 16 
+atiendeConsulta Rodriguez 
+atiendeConsulta Rodriguez 
+pideConsulta Ana Alvarez 16 12:10 
+listaPacientes Alvarez 16 
+siguientePaciente Alvarez 
+atiendeConsulta Alvarez 
+atiendeConsulta Alvarez 
+atiendeConsulta Alvarez 
+siguientePaciente Alvarez 
+listaPacientes Alvarez 20
