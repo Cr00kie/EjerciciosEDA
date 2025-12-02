@@ -41,56 +41,72 @@ bool operator< (const cita& c1, const cita& c2){
 
 class Consultorio{
    unordered_map<medico, set<cita>> consulta;
-   unordered_map<medico, unordered_map<dia, set<cita>::iterator>> comienzoDias;
+   unordered_map<medico, map<dia, set<cita>::iterator>> comienzoDias;
 
    public:
-   void nuevoMedico(const medico& m){
+   void nuevoMedico(medico m){
       consulta[m];
    }
 
    void pideConsulta(const paciente& p, const medico& m, fecha f){
       auto pMedico = consulta.find(m);
       if(pMedico == consulta.end()) throw invalid_argument("Medico no existente");
+
       auto insertInfo = pMedico->second.insert({f, p});
       if(!insertInfo.second) throw invalid_argument("Fecha ocupada");
+
       auto findIt = comienzoDias[m].find(f.dia);
       if(findIt == comienzoDias[m].end() || f < comienzoDias[m][f.dia]->first){
          comienzoDias[m][f.dia] = insertInfo.first;
       }
    }
 
-   paciente siguientePaciente(const medico& m){
+   paciente siguientePaciente(medico m){
       auto pMedico = consulta.find(m);
       if(pMedico == consulta.end()) throw invalid_argument("Medico no existente");
+
       if(pMedico->second.size() == 0) throw invalid_argument("No hay pacientes");
+
       return pMedico->second.begin()->second;
    }
 
-   void atiendeConsulta(const medico& m){
+   void atiendeConsulta(medico m){
       auto pMedico = consulta.find(m);
       if(pMedico == consulta.end()) throw invalid_argument("Medico no existente");
+
       if(pMedico->second.size() == 0) throw invalid_argument("No hay pacientes");
-      comienzoDias[m][pMedico->second.begin()->first.dia] = pMedico->second.erase(pMedico->second.begin());
+
+      int dia = pMedico->second.begin()->first.dia;
+      auto sigDia = pMedico->second.erase(pMedico->second.begin());
+      if(sigDia == pMedico->second.end() || sigDia->first.dia != dia)
+         comienzoDias[m].erase(dia); 
+      else
+         comienzoDias[m][dia] = sigDia;
+      
    }
 
-   set<cita> listaPacientes(const medico& m, fecha f){
+   set<cita> listaPacientes(medico m, fecha f){
       auto pMedico = consulta.find(m);
       if(pMedico == consulta.end()) throw invalid_argument("Medico no existente");
+
       // Si ese dia no tiene nada devolvemos un set vacio
-      if(comienzoDias[m].find(f.dia) == comienzoDias[m].end())
+      auto pDia = comienzoDias[m].find(f.dia);
+      if(pDia == comienzoDias[m].end())
       {
-         return set<cita>();
+         return {};
       }
+
       // Buscamos el fin del dia
-      auto findFinIt = comienzoDias[m].find(f.dia+1);
+      auto findFinIt = comienzoDias[m].upper_bound(f.dia);
       // Si no lo encontramos ponemos todas las citas restantes
       auto finDelDia = findFinIt == comienzoDias[m].end() ? pMedico->second.end() : findFinIt->second;
+
       // PRUEBA PORQUE NO ENTIENDO PORQUE DA RUN ERROR
-      if(comienzoDias[m][f.dia] == finDelDia){
-         return set<cita>();
+      if(pDia->second == finDelDia){
+         return {};
       }
       // Creamos el set recorriendo las citas de ese dia solo
-      return set<cita>(comienzoDias[m][f.dia], finDelDia);
+      return set<cita>(pDia->second, finDelDia);
    }
 };
 
