@@ -24,7 +24,7 @@ protected:
     set<paciente> pacientesRecuperados;
 public:
 
-    // coste:
+    // coste: O(1)
     void nuevo_paciente(paciente p, gravedad g) {
         // Buscamos el paciente
         auto pacienteIt = pacientes.find(p);
@@ -39,7 +39,7 @@ public:
         pacientes[p] = {g, --colaDeEspera[g-1].end()};
     }
     
-    // coste:
+    // coste: O(1)
     int gravedad_actual(paciente p) const {
         // Buscamos el paciente
         auto pacienteIt = pacientes.find(p);
@@ -49,7 +49,7 @@ public:
         return pacienteIt->second.first;
     }
 
-    // coste:
+    // coste: O(1)
     paciente siguiente() {
         // Buscamos la cola no vacia (siempre coste 3 en peor caso)
         int i = 2;
@@ -64,7 +64,7 @@ public:
         return ret;
     }
 
-    // coste:
+    // coste: O(log n) en el peor caso, siendo n pacientesRecuperados.size()
     void mejora(paciente p) {
         // Buscamos el paciente
         auto pacienteIt = pacientes.find(p);
@@ -78,7 +78,7 @@ public:
             // Si todavia se encuentra mal, lo volvemos a meter
             colaDeEspera[gravedad-1].push_front(p);
             // Actualizamos el iterador
-            pacienteIt->second.second = --colaDeEspera[gravedad-1].end();
+            pacienteIt->second.second = colaDeEspera[gravedad-1].begin();
         }
         else{
             // Lo metemos entre los recuperados
@@ -89,7 +89,7 @@ public:
 
     }
 
-    // coste:
+    // coste: O(n) siendo n =  pacientesRecuperados.size()
     list<paciente> recuperados() const {
         return list<paciente>(pacientesRecuperados.begin(), pacientesRecuperados.end());
     }
