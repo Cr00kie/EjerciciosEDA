@@ -32,7 +32,7 @@ class iPud {
     void addSong(cancion titulo, artista autor, int tiempo){
         // Buscamos la cancion
         auto itCancion = registroCanciones.find(titulo);
-        if(itCancion != registroCanciones.end()) throw invalid_argument("Cancion ya existente");
+        if(itCancion != registroCanciones.end()) throw invalid_argument("addSong");
 
         // Registramos la cancion
         registroCanciones[titulo] = {autor, tiempo, listaReproduccion.end(), historialReproduccion.end()};
@@ -41,7 +41,7 @@ class iPud {
     void addToPlayList(cancion titulo){
         // Buscamos la cancion
         auto itCancion = registroCanciones.find(titulo);
-        if(itCancion == registroCanciones.end()) throw invalid_argument("Cancion inexistente");
+        if(itCancion == registroCanciones.end()) throw invalid_argument("addToPlayList");
 
         // Si la cancion no esta en la play list
         if(itCancion->second.posLista == listaReproduccion.end()){
