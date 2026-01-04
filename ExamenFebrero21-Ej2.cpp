@@ -7,16 +7,12 @@
 #include "bintree_eda.h"
 using namespace std;
 
+
 template <class T>
-int esSimetrico(bintree<T> const& tree, int k, int sign) {
-    if(tree.empty()) return 0;
-
-    int balanceIzq = esSimetrico(tree.left(), k+1, -1);
-    int balanceDer = esSimetrico(tree.right(), k+1, 1);
-
-    // std::cout << balanceDer << " + " << balanceIzq << " + " << (sign * k*k) << " = " << balanceDer + balanceIzq + (sign * k*k) << '\n';
-
-    return balanceDer + balanceIzq + (sign * k*k);
+bool esSimetrico(bintree<T> const& treeLeft, bintree<T> const& treeRight) {
+    if(treeLeft.empty() && treeRight.empty()) return true; 
+    else if(!treeLeft.empty() && !treeRight.empty()) return esSimetrico(treeRight.left(), treeLeft.right()) && esSimetrico(treeRight.right(), treeLeft.left());
+    else return false;
 }
 
 
@@ -26,8 +22,8 @@ void resuelveCaso() {
     // leer los datos de la entrada
     bintree<char> tree;
     tree = leerArbol('.');
-    int res = esSimetrico(tree, 0, 1);
-    cout << (res==0?"SI":"NO") << '\n';
+    bool res = esSimetrico(tree.right(), tree.left());
+    cout << (res?"SI":"NO") << '\n';
 }
 
 //#define DOMJUDGE
