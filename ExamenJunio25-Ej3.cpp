@@ -8,25 +8,46 @@
 #include <unordered_map>
 #include <vector>
 #include <algorithm>
+#include <queue>
 using namespace std;
 
-// Complejidad:
+// Complejidad: O( log(c.size()) + k )
 template <class K, class V>
 void eliminaKMenores(map<K, V>& map, int k){
+    // De esta forma optimizamos para todas las k mayores que map.size() a tiempo constante
     if (k >= map.size()) {
         map.clear();
         return;
     }
 
-    // Para hacer este ejercicio necesito un compilador mejor
-
-
+    auto segmentEnd = map.begin();
+    for(int i = 0; i < k; ++i) segmentEnd++; // O(k)
+    map.erase(map.begin(), segmentEnd); // O(log(c.size) + k)
 }
 
-// Complejidad:
+// Complejidad: O( map.size() * 2log(k) )
 template <class C, class V>
 void eliminaKMenores(unordered_map<C, V>& map, int k){
+    if (k >= map.size()) {
+        map.clear();
+        return;
+    }
 
+    std::priority_queue<string> kMenores;
+
+    // O(map.size() * ( 2log(kMenores.size()) ))
+    for(auto par : map){
+        kMenores.push(par.first); // log(kMenores.size())
+        if(kMenores.size() > k){
+            kMenores.pop(); // 2*log(kMenores.size())
+        }
+    }
+
+    // O(map.size() * ( 2log(kMenores.size()) ))
+    while(!kMenores.empty()){
+        map.erase(kMenores.top());
+        kMenores.pop(); // 2*log(kMenores.size())
+    }
 }
 
 
