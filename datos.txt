@@ -1,16 +1,25 @@
-addSong HumanTouch BruceSpringsteen 392
-addSong BornToRun BruceSpringsteen 270
-addToPlaylist BornToRun
-addToPlaylist HumanTouch
-play
-totalTime
-addSong LuckyTown BruceSpringsteen 207
-addToPlaylist LuckyTown
-play
-play
-deleteSong HumanTouch
-recent 2
+fichar Messi Barcelona
+fichar Neymar Barcelona
+ultimos_fichajes Barcelona 3
+fichar Neymar PSG
+fichar Griezmann Barcelona
+ultimos_fichajes Barcelona 2
+fichar Messi PSG
+cuantos_equipos Messi
+fichados Barcelona
+fichados PSG
+equipo_actual Griezmann
+fichar Messi Barcelona
+cuantos_equipos Messi
+fichar Suarez Barcelona
+ultimos_fichajes Barcelona 8
 FIN
-play
-current
+fichados PSG
+cuantos_equipos Messi
+fichar Messi Barcelona
+fichar Messi PSG
+ultimos_fichajes Barcelona 7
+ultimos_fichajes PSG 7
+ultimos_fichajes RealMadrid 7
+equipo_actual Haaland
 FIN
